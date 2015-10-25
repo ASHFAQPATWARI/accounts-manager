@@ -1,17 +1,10 @@
 angular.module('accountsManager.controllers', [])
 
-.controller('customerCtrl', function($scope, customer) {
+.controller('customerCtrl', function($scope, customer, $ionicModal, $ionicPopup, $timeout) {
     $scope.customers = [];
     $scope.customers = null;
-    var customerFake = {
-        id: 1,
-        name: "Ahmad Jawda",
-        shopName: "Reliable Stores",
-        area: "Sharq",
-        country: "Kuwait",
-        mobile: "7200381711",
-        landline: "96692952"
-    };
+    $scope.customerObj = {};
+
     $scope.updateCustomer = function() {
       customer.all().then(function(customers){
         $scope.customers = customers;
@@ -20,14 +13,18 @@ angular.module('accountsManager.controllers', [])
 
     $scope.updateCustomer();
 
-    $scope.createNewCustomer = function(member) {
+    $scope.createNewCustomer = function(member, close) {
+      console.log("new customer info", member);
       customer.add(member);
       $scope.updateCustomer();
+      if(close){
+        $scope.closeModal();
+      }
     };
 
-    $scope.createNewCustomer(customerFake);
+    //$scope.createNewCustomer(customerFake);
 
-    $scope.removeMember = function(member) {
+    $scope.removeCustomer = function(member) {
       customer.remove(member);
       $scope.updateCustomer();
     };
@@ -36,6 +33,57 @@ angular.module('accountsManager.controllers', [])
       customer.update(origMember, editMember);
       $scope.updateCustomer();
     };
+
+    //template functions
+    $scope.showOptions = function() {
+        var optionPopup = $ionicPopup.show({
+            title: 'Add Customer',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<i class="icon ion-android-add-circle"></i>',
+                    type: 'button-calm',
+                    onTap: function(e) {
+                        optionPopup.close();
+                        $timeout(function(){
+                            $scope.openModal();
+                        });
+                    }
+                }
+            ]
+        });
+
+        optionPopup.then(function(res) {
+            optionPopup.close();
+        });
+    };
+
+    //modal related functions
+    $ionicModal.fromTemplateUrl('/templates/partials/customer-modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+    }).then(function(modal) {
+        $scope.modal = modal;
+    });
+    $scope.openModal = function() {
+        $scope.modal.show();
+    };
+    $scope.closeModal = function() {
+        $scope.modal.hide();
+    };
+    //Cleanup the modal when we're done with it!
+    $scope.$on('$destroy', function() {
+        //$scope.modal.remove();
+    });
+    // Execute action on hide modal
+    $scope.$on('modal.hidden', function() {
+        $scope.customerObj = {};
+    });
+    // Execute action on remove modal
+    $scope.$on('modal.removed', function() {
+      // Execute action
+    });
+
 })
 
 .controller('accountsCtrl', function($scope) {

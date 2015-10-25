@@ -1,0 +1,35 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">New Customer Information</h1>
+    <button class="button" ng-click="closeModal()"><i class="icon ion-android-cancel"></i></button>
+  </ion-header-bar>
+  <ion-content>
+    <div class="list">
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Customer Name</span>
+        <input type="text" placeholder="Customer Name" ng-model="customerObj.name">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Shop Name</span>
+        <input type="text" placeholder="Shop Name" ng-model="customerObj.shopName">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Area</span>
+        <input type="text" placeholder="Area" ng-model="customerObj.area">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Country</span>
+        <input type="text" placeholder="Country" ng-model="customerObj.country">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Mobile Number</span>
+        <input type="text" placeholder="Mobile Number" ng-model="customerObj.mobile">
+      </label>
+      <label class="item item-input item-floating-label">
+        <span class="input-label calm">Landline Number</span>
+        <input type="text" placeholder="Landline Number" ng-model="customerObj.landline">
+      </label>
+    </div>
+    <button class="button button-block button-dark" ng-click="createNewCustomer(customerObj, true);">Add Customer</button>
+  </ion-content>
+</ion-modal-view>

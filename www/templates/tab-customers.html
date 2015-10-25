@@ -1,8 +1,13 @@
 <ion-view view-title="Customers">
+    <ion-nav-buttons side="right">
+        <button class="button" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
+    </ion-nav-buttons>
     <ion-content class="padding">
-        <ion-item collection-repeat="customer in customers">
-            <ion-delete-button class="ion-minus-circled"></ion-delete-button>
-            {{customer.name}}
-        </ion-item>
+        <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+            <ion-item collection-repeat="customer in customers">
+                <span class="capitalize">{{customer.name}}</span>
+                <ion-option-button class="button-assertive" ng-click="removeCustomer(customer)"><i class="icon ion-minus-circled"></i></ion-option-button>
+            </ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

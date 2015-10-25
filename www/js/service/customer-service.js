@@ -17,8 +17,8 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
   };
 
   self.add = function(member) {
-    var parameters = [member.id, member.name, member.shopName, member.area, member.country, member.mobile, member.landline];
-    return DBA.query("INSERT INTO customer (id, name, shopName, area, country, mobile, landline) VALUES (?,?,?,?,?,?,?)", parameters);
+    var parameters = [member.name, member.shopName, member.area, member.country, member.mobile, member.landline];
+    return DBA.query("INSERT INTO customer ( name, shopName, area, country, mobile, landline) VALUES (?,?,?,?,?,?)", parameters);
   };
 
   self.remove = function(member) {

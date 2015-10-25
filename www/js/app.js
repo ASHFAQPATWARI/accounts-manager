@@ -13,30 +13,31 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
 
 }])
 .run(function($ionicPlatform, $cordovaSQLite) {
-  $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
-    if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
-      cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-      cordova.plugins.Keyboard.disableScroll(true);
+    $ionicPlatform.ready(function() {
+        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+        // for form inputs)
+        if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
+            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+            cordova.plugins.Keyboard.disableScroll(true);
 
-    }
-    if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
-      StatusBar.styleLightContent();
-    }
+        }
+        if (window.StatusBar) {
+            // org.apache.cordova.statusbar required
+            StatusBar.styleLightContent();
+        }
 
-    if(window.cordova) {
-      // App syntax
-      db = $cordovaSQLite.openDB("accountManager.db");
-    } else {
-      // Ionic serve syntax
-      db = window.openDatabase("accountManager.db", "1.0", "Accounts Manager", -1);
-    }
+        if(window.cordova) {
+            // App syntax
+            db = $cordovaSQLite.openDB("accountManager.db");
+        } else {
+            // Ionic serve syntax
+            db = window.openDatabase("accountManager.db", "1.0", "Accounts Manager", -1);
+        }
 
-  $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS customer (id integer primary key, name text, shopName text, area text, country text, mobile text, landline text)");
+        //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS customer;");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS customer (id integer primary key AUTOINCREMENT, name text, shopName text, area text, country text, mobile text, landline text)");
 
-  });
+    });
 })
 
 .config(function($stateProvider, $urlRouterProvider) {
