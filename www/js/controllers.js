@@ -59,7 +59,7 @@ angular.module('accountsManager.controllers', [])
     };
 
     //modal related functions
-    $ionicModal.fromTemplateUrl('/templates/partials/customer-modal.html', {
+    $ionicModal.fromTemplateUrl('./templates/partials/customer-modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
     }).then(function(modal) {
