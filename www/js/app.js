@@ -5,9 +5,14 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'accountsManager.services'])
+angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'accountsManager.services', 'ngCordova'])
 
-.run(function($ionicPlatform) {
+.config(['$ionicConfigProvider', function($ionicConfigProvider) {
+
+    $ionicConfigProvider.tabs.position('bottom'); // other values: top
+
+}])
+.run(function($ionicPlatform, $cordovaSQLite) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -20,6 +25,17 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
       // org.apache.cordova.statusbar required
       StatusBar.styleLightContent();
     }
+
+    if(window.cordova) {
+      // App syntax
+      db = $cordovaSQLite.openDB("accountManager.db");
+    } else {
+      // Ionic serve syntax
+      db = window.openDatabase("accountManager.db", "1.0", "Accounts Manager", -1);
+    }
+
+  $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS customer (id integer primary key, name text, shopName text, area text, country text, mobile text, landline text)");
+
   });
 })
 
@@ -45,7 +61,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
     views: {
       'tab-customers': {
         templateUrl: 'templates/tab-customers.html',
-        controller: 'DashCtrl'
+        controller: 'customerCtrl'
       }
     }
   })
@@ -55,7 +71,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
       views: {
         'tab-accounts': {
           templateUrl: 'templates/tab-accounts.html',
-          controller: 'ChatsCtrl'
+          controller: 'accountsCtrl'
         }
       }
     })
@@ -74,7 +90,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
     views: {
       'tab-stock': {
         templateUrl: 'templates/tab-stock.html',
-        controller: 'AccountCtrl'
+        controller: 'stockCtrl'
       }
     }
   });
