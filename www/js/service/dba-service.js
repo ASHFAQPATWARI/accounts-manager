@@ -33,6 +33,7 @@ accountsManagerServices.factory('DBA', function($cordovaSQLite, $q, $ionicPlatfo
 
   // Proces a single result
   self.getById = function(result) {
+    console.log("result", result);
     var output = angular.copy(result.rows.item(0));
     return output;
   };

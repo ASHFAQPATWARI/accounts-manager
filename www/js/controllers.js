@@ -1,6 +1,6 @@
-angular.module('accountsManager.controllers', [])
+var accountsApp = angular.module('accountsManager.controllers', []);
 
-.controller('customerCtrl', function($scope, customer, $ionicModal, $ionicPopup, $timeout) {
+accountsApp.controller('customerCtrl', function($scope, customer, $ionicModal, $ionicPopup, $timeout) {
     $scope.customers = [];
     $scope.customers = null;
     $scope.customerObj = {};
@@ -84,9 +84,9 @@ angular.module('accountsManager.controllers', [])
       // Execute action
     });
 
-})
+});
 
-.controller('accountsCtrl', function($scope) {
+accountsApp.controller('accountsCtrl', function($scope) {
   // With the new view caching in Ionic, Controllers are only called
   // when they are recreated or on app start, instead of every page change.
   // To listen for when this page is active (for example, to refresh data),
@@ -99,13 +99,13 @@ angular.module('accountsManager.controllers', [])
   $scope.remove = function(chat) {
     Chats.remove(chat);
   };*/
-})
+});
 
 /*.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })*/
 
-.controller('stockCtrl', function($scope) {
+accountsApp.controller('stockCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
   };

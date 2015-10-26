@@ -34,6 +34,8 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
             db = window.openDatabase("accountManager.db", "1.0", "Accounts Manager", -1);
         }
 
+        //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS user;");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, username text, password text)");
         //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS customer;");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS customer (id integer primary key AUTOINCREMENT, name text, shopName text, area text, country text, mobile text, landline text)");
 
@@ -42,39 +44,46 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-  // Ionic uses AngularUI Router which uses the concept of states
-  // Learn more here: https://github.com/angular-ui/ui-router
-  // Set up the various states which the app can be in.
-  // Each state's controller can be found in controllers.js
-  $stateProvider
+    // Ionic uses AngularUI Router which uses the concept of states
+    // Learn more here: https://github.com/angular-ui/ui-router
+    // Set up the various states which the app can be in.
+    // Each state's controller can be found in controllers.js
+    $stateProvider
 
-  // setup an abstract state for the tabs directive
+    //login and sign-up states
+    .state('login', {
+        url: '/login',
+        templateUrl: 'templates/login.html',
+        controller: 'loginCtrl'
+    })
+
+    // setup an abstract state for the tabs directive
     .state('tab', {
-    url: '/tab',
-    abstract: true,
-    templateUrl: 'templates/tabs.html'
-  })
+        url: '/tab',
+        abstract: true,
+        templateUrl: 'templates/tabs.html'
+    })
 
-  // Each tab has its own nav history stack:
+    // Each tab has its own nav history stack:
 
-  .state('tab.customers', {
-    url: '/customers',
-    views: {
-      'tab-customers': {
-        templateUrl: 'templates/tab-customers.html',
-        controller: 'customerCtrl'
-      }
-    }
-  })
-
-  .state('tab.accounts', {
-      url: '/accounts',
-      views: {
-        'tab-accounts': {
-          templateUrl: 'templates/tab-accounts.html',
-          controller: 'accountsCtrl'
+    .state('tab.customers', {
+        url: '/customers',
+        views: {
+            'tab-customers': {
+                templateUrl: 'templates/tab-customers.html',
+                controller: 'customerCtrl'
+            }
         }
-      }
+    })
+
+    .state('tab.accounts', {
+        url: '/accounts',
+        views: {
+            'tab-accounts': {
+              templateUrl: 'templates/tab-accounts.html',
+              controller: 'accountsCtrl'
+            }
+        }
     })
     /*.state('tab.chat-detail', {
       url: '/chats/:chatId',
@@ -86,17 +95,17 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
       }
     })*/
 
-  .state('tab.stock', {
-    url: '/stock',
-    views: {
-      'tab-stock': {
-        templateUrl: 'templates/tab-stock.html',
-        controller: 'stockCtrl'
-      }
-    }
-  });
+    .state('tab.stock', {
+        url: '/stock',
+        views: {
+            'tab-stock': {
+              templateUrl: 'templates/tab-stock.html',
+              controller: 'stockCtrl'
+            }
+        }
+    });
 
-  // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/tab/customers');
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/login');
 
 });

@@ -23,13 +23,15 @@
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label calm">Mobile Number</span>
-        <input type="text" placeholder="Mobile Number" ng-model="customerObj.mobile">
+        <input type="number" placeholder="Mobile Number" ng-model="customerObj.mobile">
       </label>
       <label class="item item-input item-floating-label">
         <span class="input-label calm">Landline Number</span>
-        <input type="text" placeholder="Landline Number" ng-model="customerObj.landline">
+        <input type="number" placeholder="Landline Number" ng-model="customerObj.landline">
       </label>
     </div>
-    <button class="button button-block button-dark" ng-click="createNewCustomer(customerObj, true);">Add Customer</button>
+    <div class="padding-horizontal">
+      <button class="button button-block button-dark" ng-click="createNewCustomer(customerObj, true);">Add Customer</button>
+    </div>
   </ion-content>
 </ion-modal-view>
