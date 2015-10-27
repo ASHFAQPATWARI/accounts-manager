@@ -42,13 +42,20 @@ accountsApp.controller('customerCtrl', function($scope, customer, $ionicModal, $
             buttons: [
                 {
                     text: '<i class="icon ion-android-add-circle"></i>',
-                    type: 'button-calm',
+                    type: 'button-positive',
                     onTap: function(e) {
                         optionPopup.close();
                         $timeout(function(){
                             $scope.openModal();
                         });
                     }
+                },
+                {
+                  text: 'Cancel',
+                  type: 'button-assertive',
+                  onTap: function(e) {
+                    optionPopup.close();
+                  }
                 }
             ]
         });

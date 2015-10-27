@@ -12,6 +12,14 @@ accountsManagerServices.factory('loginService', function($cordovaSQLite, DBA) {
       });
   };
 
+  self.getCount = function(){
+    var parameters = [];
+    return DBA.query("SELECT count(*) FROM user", parameters)
+      .then(function(result) {
+        return DBA.getAll(result);
+      });
+  };
+
   self.add = function(member) {
     var parameters = [member.username, member.password];
     return DBA.query("INSERT INTO user ( username, password) VALUES (?,?)", parameters);
