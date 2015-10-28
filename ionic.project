@@ -1,6 +1,6 @@
 {
   "name": "accounts-manager",
-  "app_id": "",
+  "app_id": "801db29c",
   "gulpStartupTasks": [
     "sass",
     "watch"

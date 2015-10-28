@@ -111,9 +111,3 @@ accountsApp.controller('accountsCtrl', function($scope) {
 /*.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
   $scope.chat = Chats.get($stateParams.chatId);
 })*/
-
-accountsApp.controller('stockCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
