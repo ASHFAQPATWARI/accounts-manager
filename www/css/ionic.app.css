@@ -9297,3 +9297,10 @@ a.button {
 
 .login-form .input-label {
   width: 10%; }
+
+.scroll-button {
+  position: absolute;
+  bottom: 60px;
+  right: 15px;
+  opacity: 0.7;
+  border-radius: 50%; }

@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'accountsManager.services', 'ngCordova'])
+angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'accountsManager.services', 'ngCordova', 'ionicScroller', 'jett.ionic.scroll.sista'])
 
 .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
@@ -34,6 +34,8 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
             db = window.openDatabase("accountManager.db", "1.0", "Accounts Manager", -1);
         }
 
+        $cordovaSQLite.execute(db, "DROP TABLE IF EXISTS stockCategory;");
+        $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS stockCategory (id integer primary key AUTOINCREMENT, category text, totalItems integer DEFAULT 0)");
         //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS user;");
         $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS user (id integer primary key AUTOINCREMENT, username text, password text)");
         //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS customer;");
