@@ -1,7 +1,7 @@
 /**
  * Created by apatwari on 10/28/2015.
  */
-accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService) {
+accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService) {
 
   /*variables used in stock controller*/
   $scope.categoryObj = {};
@@ -14,6 +14,7 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
       $scope.stockCategories = categories;
     });
   };
+  updateCategories();
 
   $scope.createNewCategory = function(categoryObj){
     if($scope.categoryObj.category && $scope.categoryObj.category.trim() != ""){
@@ -26,8 +27,15 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
     }
   };
 
-  $scope.createNewItem = function(itemObj){
-    console.log("creating item. work in progress", itemObj);
+  $scope.createNewItem = function(isValid){
+    console.log('is valid', isValid);
+    console.log("creating item. work in progress", $scope.itemObj);
+    if(isValid){
+      stockItemService.add($scope.itemObj);
+      $scope.closeModal('item');
+    }else {
+      toastService.showShortBottom("Please fill in all the required item details.");
+    }
   };
 
   $scope.removeCategory = function(categoryId){

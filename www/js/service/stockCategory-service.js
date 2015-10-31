@@ -29,9 +29,17 @@ accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite,
     return DBA.query("DELETE FROM stockCategory WHERE id = (?)", parameters);
   };
 
-  self.update = function(member, totalItems) {
-    var parameters = [totalItems, member.id];
+  self.update = function(id, totalItems) {
+    var parameters = [totalItems, id];
     return DBA.query("UPDATE stockCategory SET totalItems = (?) WHERE id = (?)", parameters);
+  };
+
+  self.getItemCount = function(id) {
+    var parameters = [id];
+    return DBA.query("SELECT totalItems FROM stockCategory WHERE id = (?)", parameters)
+      .then(function (result) {
+        return DBA.getById(result);
+      })
   };
 
   return self;
