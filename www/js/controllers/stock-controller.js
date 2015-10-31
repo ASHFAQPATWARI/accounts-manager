@@ -5,6 +5,7 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
 
   /*variables used in stock controller*/
   $scope.categoryObj = {};
+  $scope.itemObj = {};
   $scope.stockCategories = [];
 
   /*functions used in template*/
@@ -25,6 +26,10 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
     }
   };
 
+  $scope.createNewItem = function(itemObj){
+    console.log("creating item. work in progress", itemObj);
+  };
+
   $scope.removeCategory = function(categoryId){
     stockCategoryService.remove(categoryId);
     updateCategories();
@@ -41,7 +46,7 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
           onTap: function(e) {
             optionPopup.close();
             $timeout(function(){
-              $scope.openModal();
+              $scope.openModal('category');
             });
           }
         },
@@ -51,7 +56,8 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
           onTap: function(e) {
             optionPopup.close();
             $timeout(function(){
-              $scope.openModal();
+              updateCategories();
+              $scope.openModal('item');
             });
           }
         },
@@ -101,6 +107,7 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
   // Execute action on hide modal
   $scope.$on('modal.hidden', function() {
     $scope.categoryObj = {};
+    $scope.itemObj = {};
   });
   // Execute action on remove modal
   $scope.$on('modal.removed', function() {
