@@ -1,7 +1,7 @@
 /**
  * Created by apatwari on 10/29/2015.
  */
-accountsManagerServices.factory('stockService', function($cordovaSQLite, DBA) {
+accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite, DBA) {
   var self = this;
 
   self.all = function() {
