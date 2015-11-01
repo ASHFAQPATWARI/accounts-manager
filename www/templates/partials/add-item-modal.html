@@ -11,7 +11,6 @@
             Select Category:
           </div>
           <select name="repeatSelect" id="repeatSelect" ng-model="itemObj.categoryid" required>
-            <option selected>Select Category...</option>
             <option ng-repeat="option in stockCategories" value="{{option.id}}">{{option.category}}</option>
           </select>
         </label>

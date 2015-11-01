@@ -4,8 +4,15 @@
   </ion-nav-buttons>
   <ion-content class="padding" scroll-sista="header-tabs">
     <ion-list>
-      <ion-item collection-repeat="category in stockCategories" class="item-divider">
-        <span class="capitalize">{{category.category}}</span>
+      <ion-item collection-repeat="category in stockCategories" class="item-stable">
+        <div class="row">
+          <div class="col col-90">
+            <span class="capitalize">{{category.category}}</span>
+          </div>
+          <div class="col text-right">
+            {{category.totalItems}}
+          </div>
+        </div>
         <ion-option-button class="button-assertive" ng-click="removeCategory(category.id)"><i class="icon ion-minus-circled"></i></ion-option-button>
       </ion-item>
     </ion-list>

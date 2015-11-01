@@ -8,10 +8,23 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
   $scope.itemObj = {};
   $scope.stockCategories = [];
 
+  /*helper functions*/
+  var filterByid = function(){
+    console.log("obj and category id", obj, categoryId);
+    return true;
+  };
+
   /*functions used in template*/
   var updateCategories = function() {
     stockCategoryService.all().then(function(categories){
-      $scope.stockCategories = categories;
+      var categories = categories;
+      stockItemService.all().then(function(items){
+        var items = items;
+        $scope.stockCategories = categories.map(function(){
+          console.log("this object", this);
+          console.log("filter based on category id", items.filter(filterByid));
+        });
+      });
     });
   };
   updateCategories();
@@ -31,8 +44,10 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
     console.log('is valid', isValid);
     console.log("creating item. work in progress", $scope.itemObj);
     if(isValid){
-      stockItemService.add($scope.itemObj);
-      $scope.closeModal('item');
+      stockItemService.add($scope.itemObj).then(function(){
+        updateCategories();
+        $scope.closeModal('item');
+      });
     }else {
       toastService.showShortBottom("Please fill in all the required item details.");
     }

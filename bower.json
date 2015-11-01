@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "ionic-scroll-sista": "~1.0.7",
-    "ionic-scroller": "~0.0.4"
+    "ionic-scroller": "~0.0.4",
+    "lodash": "~3.10.1"
   }
 }

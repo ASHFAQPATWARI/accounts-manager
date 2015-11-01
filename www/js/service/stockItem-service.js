@@ -24,9 +24,9 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
     var parameters = [member.categoryid, member.itemname, member.itemdesc, member.itemqty, member.itemprice];
     return DBA.query("INSERT INTO stockItem (categoryid, itemname, itemdesc, itemqty, itemprice) VALUES (?,?,?,?,?)", parameters)
       .then(function(){
-        stockCategoryService.getItemCount(member.categoryid)
+        return stockCategoryService.getItemCount(member.categoryid)
           .then(function(result){
-            stockCategoryService.update(member.categoryid, result.totalItems + 1);
+            return stockCategoryService.update(member.categoryid, result.totalItems + 1);
           });
       });
   };
@@ -36,11 +36,11 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
     return DBA.query("DELETE FROM stockItem WHERE id = (?)", parameters);
   };
 
-  self.updateItemCountInCategory = function(id){
-    var parameters = [id];
-    DBA.query("SELECT totalItems FROM stockItem WHERE categoryid = (?)", parameters)
+  self.getItemsByCategoryId = function(categoryid){
+    var parameters = [categoryid];
+    return DBA.query("SELECT id, categoryid, itemname, itemdesc, itemqty, itemprice FROM stockItem WHERE categoryid = (?)", parameters)
       .then(function(result){
-        console.log(JSON.stringify(result));
+        return DBA.getAll(result);
       });
   };
 
