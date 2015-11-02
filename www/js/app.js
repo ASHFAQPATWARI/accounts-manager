@@ -93,7 +93,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
       url: '/chats/:chatId',
       views: {
         'tab-chats': {
-          templateUrl: 'templates/chat-detail.html',
+          templateUrl: 'templates/category-detail.html',
           controller: 'ChatDetailCtrl'
         }
       }
@@ -107,7 +107,16 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
               controller: 'stockCtrl'
             }
         }
-    });
+    })
+      .state('tab.category-detail', {
+        url: '/stock/:categoryId',
+        views: {
+          'tab-stock': {
+            templateUrl: 'templates/category-detail.html',
+            controller: 'categoryDetailCtrl'
+          }
+        }
+      });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/login');

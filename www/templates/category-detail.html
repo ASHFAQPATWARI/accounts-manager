@@ -1,0 +1,34 @@
+<ion-view view-title="{{categoryObj.category}}">
+  <ion-content class="padding" scroll-sista="header-tabs">
+    <div class="card" ng-repeat="item in itemList">
+      <div class="item item-divider">
+        {{item.itemname}}
+      </div>
+      <div class="item item-text-wrap">
+        {{item.itemdesc}}
+      </div>
+      <div class="item item-divider">
+        <div class="row">
+          <div class="col ">
+            Price: {{item.itemprice | currency:"KWD"}}
+          </div>
+          <div class="col col-25">
+            Qty: {{item.itemqty}}
+          </div>
+          <div class="col col-10 text-center" ng-click="updateItemModal(item)">
+            <i class="icon ion-android-create"></i>
+          </div>
+          <div class="col col-10 assertive text-center" ng-click="deleteItem(item)">
+            <i class="icon ion-trash-a"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" ng-if="!itemList.length">
+      <div class="item item-divider">
+        <i class="icon ion-android-sad"></i><span class="padding-left">No Items Yet.</span>
+      </div>
+    </div>
+  </ion-content>
+  <ion-scroller-top css-class="button button-assertive scroll-button" offset="50" text="UP!" animate="true"></ion-scroller-top>
+</ion-view>

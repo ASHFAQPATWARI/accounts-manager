@@ -11,8 +11,8 @@ accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite,
       });
   };
 
-  self.get = function(memberId) {
-    var parameters = [memberId];
+  self.get = function(id) {
+    var parameters = [id];
     return DBA.query("SELECT id, category, totalItems FROM stockCategory WHERE id = (?)", parameters)
       .then(function(result) {
         return DBA.getById(result);

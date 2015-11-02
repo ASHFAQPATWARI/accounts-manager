@@ -2,6 +2,10 @@
  * Created by apatwari on 10/28/2015.
  */
 accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService) {
+  /*execute whenever view is loaded*/
+  $scope.$on('$ionicView.enter', function() {
+    updateCategories();
+  });
 
   /*variables used in stock controller*/
   $scope.categoryObj = {};
@@ -17,17 +21,9 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
   /*functions used in template*/
   var updateCategories = function() {
     stockCategoryService.all().then(function(categories){
-      var categories = categories;
-      stockItemService.all().then(function(items){
-        var items = items;
-        $scope.stockCategories = categories.map(function(){
-          console.log("this object", this);
-          console.log("filter based on category id", items.filter(filterByid));
-        });
-      });
+      $scope.stockCategories = categories;
     });
   };
-  updateCategories();
 
   $scope.createNewCategory = function(categoryObj){
     if($scope.categoryObj.category && $scope.categoryObj.category.trim() != ""){
@@ -41,8 +37,6 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
   };
 
   $scope.createNewItem = function(isValid){
-    console.log('is valid', isValid);
-    console.log("creating item. work in progress", $scope.itemObj);
     if(isValid){
       stockItemService.add($scope.itemObj).then(function(){
         updateCategories();

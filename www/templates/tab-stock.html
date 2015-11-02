@@ -4,13 +4,16 @@
   </ion-nav-buttons>
   <ion-content class="padding" scroll-sista="header-tabs">
     <ion-list>
-      <ion-item collection-repeat="category in stockCategories" class="item-stable">
+      <ion-item collection-repeat="category in stockCategories" class="item-stable" href="#/tab/stock/{{category.id}}">
         <div class="row">
-          <div class="col col-90">
+          <div class="col col-80">
             <span class="capitalize">{{category.category}}</span>
           </div>
-          <div class="col text-right">
+          <div class="col">
             {{category.totalItems}}
+          </div>
+          <div class="col">
+            <i class="icon ion-android-arrow-forward"></i>
           </div>
         </div>
         <ion-option-button class="button-assertive" ng-click="removeCategory(category.id)"><i class="icon ion-minus-circled"></i></ion-option-button>
