@@ -4,10 +4,11 @@
 /**
  * Created by apatwari on 10/28/2015.
  */
-accountsApp.controller('categoryDetailCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, $stateParams) {
+accountsApp.controller('categoryDetailCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, $stateParams, commonService) {
 
   /*execute on view load everytime*/
   $scope.$on('$ionicView.enter', function() {
+    //commonService.showLoading();
     getItemsList();
   });
 

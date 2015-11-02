@@ -9304,3 +9304,6 @@ a.button {
   right: 15px;
   opacity: 0.7;
   border-radius: 50%; }
+
+.spinner-android {
+  stroke: red; }
