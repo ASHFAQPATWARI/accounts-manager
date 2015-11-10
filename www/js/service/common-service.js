@@ -11,5 +11,9 @@ accountsManagerServices.factory('commonService', function($ionicLoading) {
     });
   };
 
+  self.hideLoading = function(){
+    $ionicLoading.hide();
+  };
+
   return self;
 });
