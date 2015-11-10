@@ -31,5 +31,12 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
     return DBA.query("UPDATE customer SET id = (?), name = (?) WHERE id = (?)", parameters);
   };
 
+  self.getCustomersForTransaction = function() {
+    return DBA.query("SELECT id, name FROM customer")
+      .then(function(result){
+        return DBA.getAll(result);
+      });
+  };
+
   return self;
 });

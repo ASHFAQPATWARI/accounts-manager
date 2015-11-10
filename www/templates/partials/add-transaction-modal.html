@@ -1,0 +1,43 @@
+<ion-modal-view>
+  <ion-header-bar class="bar bar-header bar-positive">
+    <h1 class="title">Add Transaction</h1>
+    <button class="button" ng-click="closeModal()"><i class="icon ion-android-cancel"></i></button>
+  </ion-header-bar>
+  <ion-content>
+    <form name="addTransactionForm" ng-submit="createTransaction(addTransactionForm.$valid);" novalidate>
+      <div class="list">
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Select Customer:
+          </div>
+          <select name="customerSelect" id="customerSelect" ng-model="transactionObj.customerId" required>
+            <option ng-repeat="option in customers" value="{{option.id}}">{{option.name}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Select Category:
+          </div>
+          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.categoryId" required>
+            <option ng-repeat="option in categories" value="{{option.id}}">{{option.category}}</option>
+          </select>
+        </label>
+        <label class="item item-input item-select">
+          <div class="input-label">
+            Select Item:
+          </div>
+          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.itemId" required>
+            <option ng-repeat="option in itemList" value="{{option.id}}">{{option.itemname}}</option>
+          </select>
+        </label>
+        <!--<label class="item item-input item-floating-label">
+          <span class="input-label calm">Item Name</span>
+          <input type="text" placeholder="Item Name" ng-model="itemObj.itemname" required>
+        </label>-->
+      </div>
+      <div class="padding-horizontal">
+        <button type="submit" class="button button-block button-dark">Add Transaction</button>
+      </div>
+    </form>
+  </ion-content>
+</ion-modal-view>

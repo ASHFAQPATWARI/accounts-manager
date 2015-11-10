@@ -8,7 +8,7 @@ accountsApp.controller('categoryDetailCtrl', function($scope, toastService, $ion
 
   /*execute on view load everytime*/
   $scope.$on('$ionicView.enter', function() {
-    //commonService.showLoading();
+    commonService.showLoading();
     getItemsList();
   });
 
@@ -21,6 +21,9 @@ accountsApp.controller('categoryDetailCtrl', function($scope, toastService, $ion
   var getItemsList = function(){
     stockItemService.getItemsByCategoryId($stateParams.categoryId).then(function(result){
       $scope.itemList = result;
+      commonService.hideLoading();
+    }, function(){
+      commonService.hideLoading();
     });
   };
 
