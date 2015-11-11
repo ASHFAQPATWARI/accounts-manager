@@ -82,8 +82,8 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   });
 
   $scope.openModal = function() {
-    commonService.showLoading();
     if($scope.customers == null){
+      commonService.showLoading();
       customer.getCustomersForTransaction().then(function(customers){
         $scope.customers = customers;
         stockCategoryService.all().then(function(categories){
