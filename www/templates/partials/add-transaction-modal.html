@@ -7,7 +7,7 @@
     <form name="addTransactionForm" ng-submit="createTransaction(addTransactionForm.$valid);" novalidate>
       <div class="list">
         <label class="item item-input item-select">
-          <div class="input-label">
+          <div class="input-label calm">
             Select Customer:
           </div>
           <select name="customerSelect" id="customerSelect" ng-model="transactionObj.customerId" required>
@@ -15,7 +15,7 @@
           </select>
         </label>
         <label class="item item-input item-select">
-          <div class="input-label">
+          <div class="input-label calm">
             Select Category:
           </div>
           <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.categoryId" required>
@@ -23,17 +23,27 @@
           </select>
         </label>
         <label class="item item-input item-select">
-          <div class="input-label">
+          <div class="input-label calm">
             Select Item:
           </div>
           <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.itemId" required>
             <option ng-repeat="option in itemList" value="{{option.id}}">{{option.itemname}}</option>
           </select>
         </label>
-        <!--<label class="item item-input item-floating-label">
-          <span class="input-label calm">Item Name</span>
-          <input type="text" placeholder="Item Name" ng-model="itemObj.itemname" required>
-        </label>-->
+        <div class="row">
+          <div class="col">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label calm">Item Qty</span>
+              <input type="number" placeholder="Select Item first" ng-model="tempTransactionObj.qty" ng-disabled="!tempTransactionObj.itemId" min="1" max="{{selectedItemQty}}" required>
+            </label>
+          </div>
+          <div class="col">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label calm">Item Price</span>
+              <input type="number" placeholder="Select Item First" ng-model="tempTransactionObj.price" ng-disabled="!tempTransactionObj.itemId" max="{{selectedItemPrice}}" required>
+            </label>
+          </div>
+        </div>
       </div>
       <div class="padding-horizontal">
         <button type="submit" class="button button-block button-dark">Add Transaction</button>

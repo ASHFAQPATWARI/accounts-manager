@@ -36,6 +36,17 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
     }
   });
 
+  /*watch for item changes*/
+  $scope.$watch('tempTransactionObj.itemId', function(newVal, oldVal){
+    if(newVal != oldVal){
+      var selectedItem = _.find($scope.itemList, function(item){
+        return item.id == newVal;
+      });
+      $scope.selectedItemQty = selectedItem.itemqty;
+      $scope.selectedItemPrice = selectedItem.itemprice;
+    }
+  });
+
   $scope.createTransaction = function(valid){
     if(valid){
 
