@@ -9305,5 +9305,17 @@ a.button {
   opacity: 0.7;
   border-radius: 50%; }
 
-.spinner-android {
-  stroke: red; }
+.m-a {
+  margin: 1rem; }
+
+.m-t {
+  margin-top: 1rem; }
+
+.m-x {
+  margin: 0 1rem; }
+
+.m-y {
+  margin: 1rem 0; }
+
+.p-0 {
+  padding: 0 !important; }

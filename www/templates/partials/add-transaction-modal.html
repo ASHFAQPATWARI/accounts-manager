@@ -4,7 +4,7 @@
     <button class="button" ng-click="closeModal()"><i class="icon ion-android-cancel"></i></button>
   </ion-header-bar>
   <ion-content>
-    <form name="addTransactionForm" ng-submit="createTransaction(addTransactionForm.$valid);" novalidate>
+    <form name="addTransactionForm" novalidate>
       <div class="list">
         <label class="item item-input item-select">
           <div class="input-label calm">
@@ -14,11 +14,14 @@
             <option ng-repeat="option in customers" value="{{option.id}}">{{option.name}}</option>
           </select>
         </label>
+        <div class="padding-horizontal">
+          <button type="button" class="button button-block button-balanced" ng-click="openDatePicker();">Add Transaction</button>
+        </div>
         <label class="item item-input item-select">
           <div class="input-label calm">
             Select Category:
           </div>
-          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.categoryId" required>
+          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.categoryId">
             <option ng-repeat="option in categories" value="{{option.id}}">{{option.category}}</option>
           </select>
         </label>
@@ -26,7 +29,7 @@
           <div class="input-label calm">
             Select Item:
           </div>
-          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.itemId" required>
+          <select name="itemSelect" id="itemSelect" ng-model="tempTransactionObj.itemId">
             <option ng-repeat="option in itemList" value="{{option.id}}">{{option.itemname}}</option>
           </select>
         </label>
@@ -34,19 +37,44 @@
           <div class="col">
             <label class="item item-input item-stacked-label">
               <span class="input-label calm">Item Qty</span>
-              <input type="number" placeholder="Select Item first" ng-model="tempTransactionObj.qty" ng-disabled="!tempTransactionObj.itemId" min="1" max="{{selectedItemQty}}" required>
+              <input type="number" placeholder="Select Item first" ng-model="tempTransactionObj.qty" ng-disabled="!tempTransactionObj.itemId" min="1" max="{{selectedItemQty}}">
             </label>
           </div>
           <div class="col">
             <label class="item item-input item-stacked-label">
               <span class="input-label calm">Item Price</span>
-              <input type="number" placeholder="Select Item First" ng-model="tempTransactionObj.price" ng-disabled="!tempTransactionObj.itemId" max="{{selectedItemPrice}}" required>
+              <input type="number" placeholder="Select Item First" ng-model="tempTransactionObj.price" ng-disabled="!tempTransactionObj.itemId">
             </label>
           </div>
         </div>
+        <div class="text-center">
+          <button class="button button-positive icon-left ion-plus-circled" ng-click="AddItemInTransaction();">Add Item</button>
+        </div>
+        <div ng-repeat="item in transactionObj.transactionDetail" class="item m-a p-0">
+          <div class="row item-divider">
+            <div class="col-90">
+              <span class="capitalize">{{item.itemName}}</span>
+            </div>
+            <div class="col" ng-click="removeTransactionItem($index)">
+              <i class="icon assertive ion-trash-a"></i>
+            </div>
+          </div>
+          <div class="row padding-vertical m-t">
+            <div class="col">
+              {{item.qty}}
+            </div>
+            <div class="col">
+              {{item.price}}
+            </div>
+            <div class="col">
+              {{item.qty * item.price}}
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="padding-horizontal">
-        <button type="submit" class="button button-block button-dark">Add Transaction</button>
+        <button type="submit" class="button button-block button-dark" ng-click="createTransaction(addTransactionForm.$valid);">Add Transaction</button>
       </div>
     </form>
   </ion-content>

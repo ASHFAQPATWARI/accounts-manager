@@ -1,12 +1,31 @@
 /**
  * Created by ashfaq on 10/11/15.
  */
-accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, commonService, customer) {
+accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, commonService, customer, $cordovaDatePicker) {
 
   //variable for handling customers, categories list.Initially declared null
   $scope.customers = null;
   $scope.categories = null;
   $scope.itemList = [];
+
+  var options = {
+    date: new Date(),
+    mode: 'date', // or 'time'
+    //minDate: new Date() - 10000,
+    allowOldDates: true,
+    allowFutureDates: false,
+    doneButtonLabel: 'DONE',
+    doneButtonColor: '#F2F3F4',
+    cancelButtonLabel: 'CANCEL',
+    cancelButtonColor: '#000000'
+  };
+
+  $scope.openDatePicker = function(){
+    $cordovaDatePicker.show(options).then(function(date){
+      console.log("date", date);
+      console.log("formatted date", moment(date).format('L'));
+    });
+  };
 
   //transaction obj which will have transaction details
   $scope.transactionObj = {
@@ -15,13 +34,17 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
     date: null
   };
 
-  //temp obj to hold single transaction detail which will be combined into transactionObj
-  $scope.tempTransactionObj = {
+  //schema of temp transaction object
+  var schemaTransactionItem = {
     categoryId : null,
     itemId: null,
+    itemName: '',
     qty: null,
     price: null
   };
+
+  //temp obj to hold single transaction detail which will be combined into transactionObj
+  $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
 
   /*watch for category changes to update items list*/
   $scope.$watch('tempTransactionObj.categoryId', function(newVal, oldVal){
@@ -39,17 +62,35 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   /*watch for item changes*/
   $scope.$watch('tempTransactionObj.itemId', function(newVal, oldVal){
     if(newVal != oldVal){
-      var selectedItem = _.find($scope.itemList, function(item){
-        return item.id == newVal;
-      });
-      $scope.selectedItemQty = selectedItem.itemqty;
-      $scope.selectedItemPrice = selectedItem.itemprice;
+      if(newVal){
+        var selectedItem = _.find($scope.itemList, function(item){
+          return item.id == newVal;
+        });
+        $scope.selectedItemQty = $scope.tempTransactionObj.qty = selectedItem.itemqty;
+        $scope.tempTransactionObj.price = selectedItem.itemprice;
+        $scope.tempTransactionObj.itemName = selectedItem.itemname;
+      }
     }
   });
 
-  $scope.createTransaction = function(valid){
-    if(valid){
+  $scope.AddItemInTransaction = function(){
+    if($scope.tempTransactionObj.itemId){
+      $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
+      $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+    } else {
+      toastService.showShortBottom("Please select item to add.");
+    }
 
+  };
+
+  $scope.removeTransactionItem = function(index){
+    $scope.transactionObj.transactionDetail.splice(index, 1);
+  };
+
+  $scope.createTransaction = function(valid){
+    if(valid && $scope.transactionObj.transactionDetail.length){
+      console.log("customer id is there and some transaction is also there");
+      console.log("transaction object", JSON.stringify($scope.transactionObj));
     } else {
       toastService.showShortBottom("Please fill in all the required transaction details.");
     }
