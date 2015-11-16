@@ -21,7 +21,7 @@ accountsManagerServices.factory('DBA', function($cordovaSQLite, $q, $ionicPlatfo
     return q.promise;
   };
 
-  // Proces a result set
+  // Process a result set
   self.getAll = function(result) {
     var output = [];
 
@@ -31,7 +31,7 @@ accountsManagerServices.factory('DBA', function($cordovaSQLite, $q, $ionicPlatfo
     return output;
   };
 
-  // Proces a single result
+  // Process a single result
   self.getById = function(result) {
     var output = angular.copy(result.rows.item(0));
     return output;

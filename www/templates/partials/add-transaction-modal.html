@@ -14,8 +14,11 @@
             <option ng-repeat="option in customers" value="{{option.id}}">{{option.name}}</option>
           </select>
         </label>
-        <div class="padding-horizontal">
-          <button type="button" class="button button-block button-balanced" ng-click="openDatePicker();">Add Transaction</button>
+        <div class="list list-inset">
+          <label class="item item-input">
+            <i class="icon ion-android-calendar placeholder-icon"></i>
+            <input type="text" placeholder="Select Date" ng-focus="openDatePicker();" ng-model="transactionObj.date" required>
+          </label>
         </div>
         <label class="item item-input item-select">
           <div class="input-label calm">

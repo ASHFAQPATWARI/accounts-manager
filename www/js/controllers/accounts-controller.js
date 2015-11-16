@@ -1,7 +1,7 @@
 /**
  * Created by ashfaq on 10/11/15.
  */
-accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, commonService, customer, $cordovaDatePicker) {
+accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, transactionService, transactionDetailService, commonService, customer, $cordovaDatePicker) {
 
   //variable for handling customers, categories list.Initially declared null
   $scope.customers = null;
@@ -22,8 +22,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.openDatePicker = function(){
     $cordovaDatePicker.show(options).then(function(date){
-      console.log("date", date);
-      console.log("formatted date", moment(date).format('L'));
+      $scope.transactionObj.date = moment(date).format('L');
     });
   };
 
@@ -31,7 +30,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.transactionObj = {
     customerId: null,
     transactionDetail: [],
-    date: null
+    date: moment().format('L')
   };
 
   //schema of temp transaction object
@@ -75,12 +74,15 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.AddItemInTransaction = function(){
     if($scope.tempTransactionObj.itemId){
-      $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
-      $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+      if($scope.tempTransactionObj.qty <= $scope.selectedItemQty){
+        $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
+        $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+      } else {
+        toastService.showShortBottom("Quantity cannot be greater than available quantity.");
+      }
     } else {
       toastService.showShortBottom("Please select item to add.");
     }
-
   };
 
   $scope.removeTransactionItem = function(index){
@@ -89,8 +91,9 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.createTransaction = function(valid){
     if(valid && $scope.transactionObj.transactionDetail.length){
-      console.log("customer id is there and some transaction is also there");
-      console.log("transaction object", JSON.stringify($scope.transactionObj));
+      transactionService.add({ customerId: $scope.transactionObj.customerId , date: $scope.transactionObj.date}).then(function(result){
+        console.log("result from transaction add", JSON.stringify(result));
+      });
     } else {
       toastService.showShortBottom("Please fill in all the required transaction details.");
     }

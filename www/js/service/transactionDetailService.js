@@ -1,8 +1,13 @@
 /**
- * Created by apatwari on 10/29/2015.
+ * Created by apatwari on 11/16/2015.
  */
-accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA, stockCategoryService) {
+accountsManagerServices.factory('transactionDetailService', function($cordovaSQLite, DBA, stockCategoryService) {
   var self = this;
+
+  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactionDetails;");
+  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactionDetails (id integer primary key AUTOINCREMENT, transactionId integer, categoryId integer, itemId integer, qty integer, price REAL)");
+  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactions;");
+  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactions (id integer primary key AUTOINCREMENT, customerId integer, date text)");
 
   self.all = function() {
     return DBA.query("SELECT id, categoryid, itemname, itemdesc, itemqty, itemprice FROM stockItem")

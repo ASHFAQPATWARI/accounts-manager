@@ -1,8 +1,13 @@
 /**
- * Created by apatwari on 10/29/2015.
+ * Created by apatwari on 11/16/2015.
  */
-accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA, stockCategoryService) {
+accountsManagerServices.factory('transactionService', function($cordovaSQLite, DBA, stockCategoryService) {
   var self = this;
+
+  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactionDetails;");
+  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactionDetails (id integer primary key AUTOINCREMENT, transactionId integer, categoryId integer, itemId integer, qty integer, price REAL)");
+  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactions;");
+  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactions (id integer primary key AUTOINCREMENT, customerId integer, date text)");
 
   self.all = function() {
     return DBA.query("SELECT id, categoryid, itemname, itemdesc, itemqty, itemprice FROM stockItem")
@@ -19,13 +24,13 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
       });
   };
 
-  self.add = function(member) {
-    var parameters = [member.categoryid, member.itemname, member.itemdesc, member.itemqty, member.itemprice];
-    return DBA.query("INSERT INTO stockItem (categoryid, itemname, itemdesc, itemqty, itemprice) VALUES (?,?,?,?,?)", parameters)
-      .then(function(){
-        return stockCategoryService.getItemCount(member.categoryid)
+  self.add = function(transaction) {
+    var parameters = [transaction.customerId, transaction.date];
+    return DBA.query("INSERT INTO transactions (customerId, date) VALUES (?,?)", parameters)
+      .then(function(result){
+        return DBA.query("SELECT last_insert_rowid()", null)
           .then(function(result){
-            return stockCategoryService.update(member.categoryid, result.totalItems + 1);
+            return DBA.getById(result);
           });
       });
   };
