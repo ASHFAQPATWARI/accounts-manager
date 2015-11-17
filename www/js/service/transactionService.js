@@ -28,10 +28,7 @@ accountsManagerServices.factory('transactionService', function($cordovaSQLite, D
     var parameters = [transaction.customerId, transaction.date];
     return DBA.query("INSERT INTO transactions (customerId, date) VALUES (?,?)", parameters)
       .then(function(result){
-        return DBA.query("SELECT last_insert_rowid()", null)
-          .then(function(result){
-            return DBA.getById(result);
-          });
+        return result.insertId;
       });
   };
 
@@ -39,10 +36,8 @@ accountsManagerServices.factory('transactionService', function($cordovaSQLite, D
     var parameters = [item.id];
     return DBA.query("DELETE FROM stockItem WHERE id = (?)", parameters)
       .then(function(){
-        console.log("item:", JSON.stringify(item));
         return stockCategoryService.getItemCount(item.categoryid)
           .then(function(result){
-            console.log("item count", result.totalItems);
             return stockCategoryService.update(item.categoryid, result.totalItems - 1);
           });
       });

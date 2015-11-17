@@ -91,8 +91,15 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.createTransaction = function(valid){
     if(valid && $scope.transactionObj.transactionDetail.length){
-      transactionService.add({ customerId: $scope.transactionObj.customerId , date: $scope.transactionObj.date}).then(function(result){
-        console.log("result from transaction add", JSON.stringify(result));
+      commonService.showLoading();
+      transactionService.add({ customerId: $scope.transactionObj.customerId , date: $scope.transactionObj.date}).then(function(transactionId){
+        transactionDetailService.addMultipleItems($scope.transactionObj.transactionDetail, transactionId).then(function(result){
+          if(result == "success"){
+            commonService.hideLoading();
+            $scope.closeModal();
+            toastService.showShortBottom("Transaction Added Successfully.");
+          }
+        });
       });
     } else {
       toastService.showShortBottom("Please fill in all the required transaction details.");
@@ -153,5 +160,15 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.closeModal = function() {
     $scope.addTransactionModal.hide();
   };
+
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    $scope.transactionObj = {
+      customerId: null,
+      transactionDetail: [],
+      date: moment().format('L')
+    };
+    $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+  });
 
 });

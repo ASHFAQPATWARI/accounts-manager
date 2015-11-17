@@ -53,27 +53,20 @@
         <div class="text-center">
           <button class="button button-positive icon-left ion-plus-circled" ng-click="AddItemInTransaction();">Add Item</button>
         </div>
-        <div ng-repeat="item in transactionObj.transactionDetail" class="item m-a p-0">
-          <div class="row item-divider">
-            <div class="col-90">
-              <span class="capitalize">{{item.itemName}}</span>
-            </div>
-            <div class="col" ng-click="removeTransactionItem($index)">
-              <i class="icon assertive ion-trash-a"></i>
-            </div>
-          </div>
-          <div class="row padding-vertical m-t">
-            <div class="col">
-              {{item.qty}}
-            </div>
-            <div class="col">
-              {{item.price}}
-            </div>
-            <div class="col">
-              {{item.qty * item.price}}
+        <div class="card" ng-repeat="item in transactionObj.transactionDetail">
+          <div class="item item-divider">
+            <div class="row">
+              <div class="col col-90">
+                <span class="capitalize">{{item.itemName}}</span>
+              </div>
+              <div class="col" ng-click="removeTransactionItem($index)">
+                <i class="icon assertive ion-trash-a"></i>
+              </div>
             </div>
           </div>
-
+          <div class="item item-text-wrap">
+            <span class="padding-right">{{item.qty}}</span> X <span class="padding-horizontal">{{item.price | currency:"KWD"}}</span> <span class="padding-horizontal">=</span> {{item.qty * item.price | currency:"KWD"}}
+          </div>
         </div>
       </div>
       <div class="padding-horizontal">

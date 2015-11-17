@@ -11,8 +11,8 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
       });
   };
 
-  self.get = function(memberId) {
-    var parameters = [memberId];
+  self.get = function(id) {
+    var parameters = [id];
     return DBA.query("SELECT id, categoryid, itemname, itemdesc, itemqty, itemprice FROM stockItem WHERE id = (?)", parameters)
       .then(function(result) {
         return DBA.getById(result);
@@ -54,6 +54,11 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
   self.updateItem = function(item) {
     var parameters = [item.itemname, item.itemdesc, item.itemqty, item.itemprice, item.id];
     return DBA.query("UPDATE stockItem SET itemname = (?), itemdesc = (?), itemqty = (?), itemprice = (?) WHERE id = (?)", parameters);
+  };
+
+  self.updateQty = function(id, qty) {
+    var parameters = [qty, id];
+    return DBA.query("UPDATE stockItem SET itemqty = (?) WHERE id = (?)", parameters);
   };
 
   return self;
