@@ -10,7 +10,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
 .config(['$ionicConfigProvider', function($ionicConfigProvider) {
 
     $ionicConfigProvider.tabs.position('bottom'); // other values: top
-
+    /*if(!ionic.Platform.isIOS())$ionicConfigProvider.scrolling.jsScrolling(false);*/
 }])
 .run(function($ionicPlatform, $cordovaSQLite) {
     $ionicPlatform.ready(function() {

@@ -8,32 +8,32 @@
       <div class="list">
         <label class="item item-input item-select">
           <div class="input-label calm">
-            Select Customer:
+            Customer:
           </div>
-          <select name="customerSelect" id="customerSelect" ng-model="transactionObj.customerId" required>
-            <option ng-repeat="option in customers" value="{{option.id}}">{{option.name}}</option>
+          <select name="customerSelect" id="customerSelect" ng-options="option.id as option.name for option in customers" ng-model="transactionObj.customerId" required>
+            <option value="" >Select Customer</option>
           </select>
         </label>
         <div class="list list-inset">
           <label class="item item-input">
             <i class="icon ion-android-calendar placeholder-icon"></i>
-            <input type="text" placeholder="Select Date" ng-focus="openDatePicker();" ng-model="transactionObj.date" required>
+            <input type="text" placeholder="Select Date" ng-click="openDatePicker();" ng-model="transactionObj.date" required>
           </label>
         </div>
         <label class="item item-input item-select">
           <div class="input-label calm">
-            Select Category:
+            Category:
           </div>
-          <select name="categorySelect" id="categorySelect" ng-model="tempTransactionObj.categoryId">
-            <option ng-repeat="option in categories" value="{{option.id}}">{{option.category}}</option>
+          <select name="categorySelect" id="categorySelect" ng-options="option.id as option.category for option in categories" ng-model="tempTransactionObj.categoryId">
+            <option value="">Select Category</option>
           </select>
         </label>
         <label class="item item-input item-select">
           <div class="input-label calm">
-            Select Item:
+            Item:
           </div>
-          <select name="itemSelect" id="itemSelect" ng-model="tempTransactionObj.itemId">
-            <option ng-repeat="option in itemList" value="{{option.id}}">{{option.itemname}}</option>
+          <select name="itemSelect" id="itemSelect" ng-options="option.id as option.itemname for option in itemList" ng-model="tempTransactionObj.itemId">
+            <option value="">Select Item</option>
           </select>
         </label>
         <div class="row">

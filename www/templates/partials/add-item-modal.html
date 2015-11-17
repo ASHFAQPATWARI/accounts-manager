@@ -10,8 +10,8 @@
           <div class="input-label">
             Select Category:
           </div>
-          <select name="repeatSelect" id="repeatSelect" ng-model="itemObj.categoryid" required>
-            <option ng-repeat="option in stockCategories" value="{{option.id}}">{{option.category}}</option>
+          <select name="repeatSelect" id="repeatSelect" ng-options="option.id as option.category for option in stockCategories" ng-model="itemObj.categoryid" required>
+            <option value="">Select Category</option>
           </select>
         </label>
         <label class="item item-input item-floating-label">

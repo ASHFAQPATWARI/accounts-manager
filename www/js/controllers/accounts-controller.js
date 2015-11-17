@@ -28,15 +28,15 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   //transaction obj which will have transaction details
   $scope.transactionObj = {
-    customerId: null,
+    customerId: "",
     transactionDetail: [],
     date: moment().format('L')
   };
 
   //schema of temp transaction object
   var schemaTransactionItem = {
-    categoryId : null,
-    itemId: null,
+    categoryId : "",
+    itemId: "",
     itemName: '',
     qty: null,
     price: null
@@ -47,14 +47,19 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   /*watch for category changes to update items list*/
   $scope.$watch('tempTransactionObj.categoryId', function(newVal, oldVal){
-    if(newVal != oldVal){
-      commonService.showLoading();
-      stockItemService.getItemsByCategoryId(newVal).then(function(result){
-        $scope.itemList = result;
-        commonService.hideLoading();
-      }, function(){
-        commonService.hideLoading();
-      });
+    if(newVal){
+      if(newVal != oldVal){
+        commonService.showLoading();
+        stockItemService.getItemsByCategoryId(newVal).then(function(result){
+          $scope.itemList = result;
+          commonService.hideLoading();
+        }, function(){
+          commonService.hideLoading();
+        });
+      }
+    } else {
+      $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+      $scope.selectedItemQty = null;
     }
   });
 
@@ -75,8 +80,15 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.AddItemInTransaction = function(){
     if($scope.tempTransactionObj.itemId){
       if($scope.tempTransactionObj.qty <= $scope.selectedItemQty){
-        $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
-        $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+        var itemAlreadyExist = _.find($scope.transactionObj.transactionDetail, function(item){
+          return item.itemId == $scope.tempTransactionObj.itemId;
+        });
+        if(!itemAlreadyExist){
+          $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
+          $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+        } else {
+          toastService.showShortBottom("Item already added. Please choose another Item.");
+        }
       } else {
         toastService.showShortBottom("Quantity cannot be greater than available quantity.");
       }
@@ -108,11 +120,11 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.showOptions = function() {
     var optionPopup = $ionicPopup.show({
-      title: 'Stock Entry',
+      title: 'Transaction',
       scope: $scope,
       buttons: [
         {
-          text: '<i class="icon ion-android-add-circle">Transaction</i>',
+          text: '<i class="icon ion-android-add-circle"></i>',
           type: 'button-positive',
           onTap: function(e) {
             optionPopup.close();
@@ -144,16 +156,14 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   });
 
   $scope.openModal = function() {
-    if($scope.customers == null){
-      commonService.showLoading();
-      customer.getCustomersForTransaction().then(function(customers){
-        $scope.customers = customers;
-        stockCategoryService.all().then(function(categories){
-          $scope.categories = categories;
-          commonService.hideLoading();
-        });
+    commonService.showLoading();
+    customer.getCustomersForTransaction().then(function(customers){
+      $scope.customers = customers;
+      stockCategoryService.all().then(function(categories){
+        $scope.categories = categories;
+        commonService.hideLoading();
       });
-    }
+    });
     $scope.addTransactionModal.show();
   };
 
