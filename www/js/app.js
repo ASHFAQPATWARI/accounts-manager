@@ -52,10 +52,6 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
 
 .config(function($stateProvider, $urlRouterProvider) {
 
-    // Ionic uses AngularUI Router which uses the concept of states
-    // Learn more here: https://github.com/angular-ui/ui-router
-    // Set up the various states which the app can be in.
-    // Each state's controller can be found in controllers.js
     $stateProvider
 
     //login and sign-up states
@@ -93,15 +89,6 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
             }
         }
     })
-    /*.state('tab.chat-detail', {
-      url: '/chats/:chatId',
-      views: {
-        'tab-chats': {
-          templateUrl: 'templates/category-detail.html',
-          controller: 'ChatDetailCtrl'
-        }
-      }
-    })*/
 
     .state('tab.stock', {
         url: '/stock',

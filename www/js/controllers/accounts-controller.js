@@ -7,6 +7,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.customers = null;
   $scope.categories = null;
   $scope.itemList = [];
+  var categoryWatch, itemWatch;
 
   var options = {
     date: new Date(),
@@ -45,37 +46,39 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   //temp obj to hold single transaction detail which will be combined into transactionObj
   $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
 
-  /*watch for category changes to update items list*/
-  $scope.$watch('tempTransactionObj.categoryId', function(newVal, oldVal){
-    if(newVal){
-      if(newVal != oldVal){
-        commonService.showLoading();
-        stockItemService.getItemsByCategoryId(newVal).then(function(result){
-          $scope.itemList = result;
-          commonService.hideLoading();
-        }, function(){
-          commonService.hideLoading();
-        });
-      }
-    } else {
-      $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
-      $scope.selectedItemQty = null;
-    }
-  });
-
-  /*watch for item changes*/
-  $scope.$watch('tempTransactionObj.itemId', function(newVal, oldVal){
-    if(newVal != oldVal){
+  var startCategoryWatch = function(){
+    /*watch for category changes to update items list*/
+    categoryWatch = $scope.$watch('tempTransactionObj.categoryId', function(newVal, oldVal){
       if(newVal){
-        var selectedItem = _.find($scope.itemList, function(item){
-          return item.id == newVal;
-        });
-        $scope.selectedItemQty = $scope.tempTransactionObj.qty = selectedItem.itemqty;
-        $scope.tempTransactionObj.price = selectedItem.itemprice;
-        $scope.tempTransactionObj.itemName = selectedItem.itemname;
+        if(newVal != oldVal){
+          commonService.showLoading();
+          stockItemService.getItemsByCategoryId(newVal).then(function(result){
+            $scope.itemList = result;
+            commonService.hideLoading();
+          }, function(){
+            commonService.hideLoading();
+          });
+        }
+      } else {
+        $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+        $scope.selectedItemQty = null;
       }
-    }
-  });
+    });
+
+    /*watch for item changes*/
+    itemWatch = $scope.$watch('tempTransactionObj.itemId', function(newVal, oldVal){
+      if(newVal != oldVal){
+        if(newVal){
+          var selectedItem = _.find($scope.itemList, function(item){
+            return item.id == newVal;
+          });
+          $scope.selectedItemQty = $scope.tempTransactionObj.qty = selectedItem.itemqty;
+          $scope.tempTransactionObj.price = selectedItem.itemprice;
+          $scope.tempTransactionObj.itemName = selectedItem.itemname;
+        }
+      }
+    });
+  };
 
   $scope.AddItemInTransaction = function(){
     if($scope.tempTransactionObj.itemId){
@@ -155,6 +158,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
     $scope.addTransactionModal = modal;
   });
 
+  //open-modal and get customers and categories.
   $scope.openModal = function() {
     commonService.showLoading();
     customer.getCustomersForTransaction().then(function(customers){
@@ -165,6 +169,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
       });
     });
     $scope.addTransactionModal.show();
+    startCategoryWatch();
   };
 
   $scope.closeModal = function() {
@@ -179,6 +184,8 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
       date: moment().format('L')
     };
     $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
+    categoryWatch(); //removing the category and item watch
+    itemWatch();
   });
 
 });

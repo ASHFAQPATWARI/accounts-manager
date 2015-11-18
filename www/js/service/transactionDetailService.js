@@ -32,6 +32,7 @@ accountsManagerServices.factory('transactionDetailService', function($cordovaSQL
       });
   };
 
+  //this function will add transaction items one by one and also update qty in the stockItem table.
   self.addMultipleItems = function(transactionDetail, transactionId){
     var q = $q.defer();
     var count = 0;
