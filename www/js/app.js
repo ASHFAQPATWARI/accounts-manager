@@ -37,7 +37,7 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
       //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactionDetails;");
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactionDetails (id integer primary key AUTOINCREMENT, transactionId integer, categoryId integer, itemId integer, qty REAL, price REAL)");
       //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactions;");
-      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactions (id integer primary key AUTOINCREMENT, customerId integer, date text)");
+      $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactions (id integer primary key AUTOINCREMENT, customerId integer, date text, total REAL)");
       //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS stockItem;");
       $cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS stockItem (id integer primary key AUTOINCREMENT, categoryid integer, itemname text, itemdesc text, itemqty integer DEFAULT 0, itemprice REAL DEFAULT 0)");
       //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS stockCategory;");

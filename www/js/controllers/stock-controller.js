@@ -1,30 +1,28 @@
 /**
  * Created by apatwari on 10/28/2015.
  */
-accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService) {
+accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, commonService) {
   /*execute whenever view is loaded*/
-  $scope.$on('$ionicView.enter', function() {
+  $scope.$on('$ionicView.beforeEnter', function() {
+    commonService.showLoading();
     updateCategories();
   });
+
+  var updateCategories = function() {
+    stockCategoryService.all().then(function(categories){
+      $scope.stockCategories = categories;
+      commonService.hideLoading();
+    }, function(){
+      commonService.hideLoading();
+    });
+  };
 
   /*variables used in stock controller*/
   $scope.categoryObj = {};
   $scope.itemObj = {};
   $scope.stockCategories = [];
 
-  /*helper functions*/
-  var filterByid = function(){
-    console.log("obj and category id", obj, categoryId);
-    return true;
-  };
-
   /*functions used in template*/
-  var updateCategories = function() {
-    stockCategoryService.all().then(function(categories){
-      $scope.stockCategories = categories;
-    });
-  };
-
   $scope.createNewCategory = function(categoryObj){
     if($scope.categoryObj.category && $scope.categoryObj.category.trim() != ""){
       stockCategoryService.add($scope.categoryObj).then(function(){

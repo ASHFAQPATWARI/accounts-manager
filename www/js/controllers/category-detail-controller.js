@@ -7,7 +7,7 @@
 accountsApp.controller('categoryDetailCtrl', function($scope, toastService, $ionicModal, $ionicPopup, $timeout, stockCategoryService, stockItemService, $stateParams, commonService) {
 
   /*execute on view load everytime*/
-  $scope.$on('$ionicView.enter', function() {
+  $scope.$on('$ionicView.beforeEnter', function() {
     commonService.showLoading();
     getItemsList();
   });
