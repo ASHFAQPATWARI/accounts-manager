@@ -3,17 +3,10 @@
     <button class="button" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
   </ion-nav-buttons>
   <ion-content padding="true" overflow-scroll=”true” scroll-sista="header-tabs">
-    <div class="list">
-
-      <div class="item item-divider">
-        Candy Bars
-      </div>
-
-      <a class="item" href="#">
-        Butterfinger
-      </a>
-
-    </div>
+    <ion-list>
+      <ion-item class="item item-divider-platform" ng-repeat-start="(key, values) in transactions">{{key}}</ion-item>
+      <ion-item class="item" ng-repeat-end="value in values">{{value.name}}</ion-item>
+    </ion-list>
   </ion-content>
   <ion-scroller-top css-class="button button-assertive scroll-button" offset="100" text="UP!" animate="true"></ion-scroller-top>
 </ion-view>

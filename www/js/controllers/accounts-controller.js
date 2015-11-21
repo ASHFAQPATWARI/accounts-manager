@@ -7,8 +7,11 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   var updateTransactions = function(){
     commonService.showLoading();
     transactionService.all().then(function(transactions){
-      $scope.transactions = transactions;
-      console.log("transactions", transactions);
+      var formattedTransactions = _.groupBy(transactions, function(n) {
+        return n.date;
+      });
+      $scope.transactions = formattedTransactions;
+      console.log("transactions", $scope.transactions);
       commonService.hideLoading();
     }, function(){
       commonService.hideLoading();
@@ -127,13 +130,14 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
       _.forEach($scope.transactionObj.transactionDetail, function(item){
         total += item.qty * item.price;
       });
+      total = (total).toFixed(2);
       transactionService.add({ customerId: $scope.transactionObj.customerId , date: $scope.transactionObj.date, total: total}).then(function(transactionId){
         transactionDetailService.addMultipleItems($scope.transactionObj.transactionDetail, transactionId).then(function(result){
           if(result == "success"){
-            commonService.hideLoading();
-            toastService.showShortBottom("Transaction Added Successfully.");
             isUpdateNeeded = true;
             $scope.closeModal();
+            commonService.hideLoading();
+            toastService.showShortBottom("Transaction Added Successfully.");
           }
         }, function(){
           commonService.hideLoading();
