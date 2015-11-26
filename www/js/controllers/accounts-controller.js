@@ -41,7 +41,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
 
   $scope.openDatePicker = function(){
     $cordovaDatePicker.show(options).then(function(date){
-      $scope.transactionObj.date = moment(date).format('L');
+      $scope.transactionObj.date = moment(date).format('YYYY-MM-DD');
     });
   };
 
@@ -131,7 +131,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
         total += item.qty * item.price;
       });
       total = (total).toFixed(2);
-      transactionService.add({ customerId: $scope.transactionObj.customerId , date: $scope.transactionObj.date, total: total}).then(function(transactionId){
+      transactionService.add({ customerId: $scope.transactionObj.customerId , date: moment($scope.transactionObj.date).format('YYYY-MM-DD'), total: total}).then(function(transactionId){
         transactionDetailService.addMultipleItems($scope.transactionObj.transactionDetail, transactionId).then(function(result){
           if(result == "success"){
             isUpdateNeeded = true;
@@ -141,6 +141,7 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
           }
         }, function(){
           commonService.hideLoading();
+
         });
       });
     } else {

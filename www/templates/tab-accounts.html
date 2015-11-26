@@ -1,8 +1,29 @@
 <ion-view view-title="Accounts">
   <ion-nav-buttons side="right">
-    <button class="button" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
+    <button class="button button-clear" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
   </ion-nav-buttons>
-  <ion-content padding="true" overflow-scroll=”true” scroll-sista="header-tabs">
+  <div class="bar bar-subheader p-0">
+    <div class="row" style="padding: 1px 0 0 3px;">
+      <div class="col p-0">
+        <div class="list list-inset m-0">
+          <label class="item item-input p-0 p-l-6">
+            <i class="icon ion-android-calendar placeholder-icon"></i>
+            <input type="text" placeholder="From" ng-click="openDatePicker();" required>
+          </label>
+        </div>
+      </div>
+      <div class="col p-0">
+        <div class="list list-inset m-0">
+          <label class="item item-input p-0 p-l-6">
+            <i class="icon ion-android-calendar placeholder-icon"></i>
+            <input type="text" placeholder="To" ng-click="openDatePicker();" required>
+          </label>
+        </div>
+      </div>
+      <div class="col col-10 text-center"><i class="icon ion-android-search"></i></div>
+    </div>
+  </div>
+  <ion-content padding="true" overflow-scroll=”true” class="has-subheader" scroll-sista="header-tabs">
     <ion-list>
       <ion-item class="item item-divider-platform" ng-repeat-start="(key, values) in transactions">{{key}}</ion-item>
       <ion-item class="item" ng-repeat-end="value in values">{{value.name}}</ion-item>
