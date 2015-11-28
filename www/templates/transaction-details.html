@@ -1,4 +1,4 @@
-<ion-view view-title="Accounts">
+<ion-view view-title="Transactions on - ">
   <ion-nav-buttons side="right">
     <button class="button button-clear" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
   </ion-nav-buttons>
@@ -25,7 +25,7 @@
   </div>
   <ion-content padding="true" overflow-scroll=”true” class="has-subheader" scroll-sista="header-tabs">
     <ion-list>
-      <ion-item class="item item-divider-platform" href="#/tab/accounts/{{transaction.date}}" ng-repeat="transaction in transactions">
+      <ion-item class="item item-divider-platform" ng-repeat="transaction in transactions">
         <div class="row">
           <div class="col col-80">
             <span class="capitalize">{{transaction.date}}</span>

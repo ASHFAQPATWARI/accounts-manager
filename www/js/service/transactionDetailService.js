@@ -24,6 +24,14 @@ accountsManagerServices.factory('transactionDetailService', function($cordovaSQL
       });
   };*/
 
+  self.getTransactionsByDate = function(date){
+    var parameters = [date];
+    return DBA.query("select * from transactionDetails inner join transactions where transactionDetails.transactionId = transactions.id and transactions.date=(?)", parameters)
+      .then(function(result) {
+        return DBA.getAll(result);
+      });
+  };
+
   self.add = function(item, transactionId) {
     var parameters = [transactionId, item.categoryId, item.itemId, item.qty, item.price];
     return DBA.query("INSERT INTO transactionDetails (transactionId, categoryId, itemId, qty, price) VALUES (?,?,?,?,?)", parameters)

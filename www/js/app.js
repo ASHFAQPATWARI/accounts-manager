@@ -89,6 +89,17 @@ angular.module('accountsManager', ['ionic', 'accountsManager.controllers', 'acco
             }
         }
     })
+      .state('tab.transactionDetail', {
+        url: '/accounts/:transactionDate',
+        views: {
+          'tab-accounts': {
+            templateUrl: 'templates/transaction-details.html',
+            controller: 'transactionDetailCtrl'
+          }
+        }
+
+
+      })
 
     .state('tab.stock', {
         url: '/stock',

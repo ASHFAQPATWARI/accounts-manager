@@ -7,11 +7,8 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   var updateTransactions = function(){
     commonService.showLoading();
     transactionService.all().then(function(transactions){
-      var formattedTransactions = _.groupBy(transactions, function(n) {
-        return n.date;
-      });
-      $scope.transactions = formattedTransactions;
-      console.log("transactions", $scope.transactions);
+      $scope.transactions = transactions;
+      console.log('transactions', transactions);
       commonService.hideLoading();
     }, function(){
       commonService.hideLoading();

@@ -13,7 +13,8 @@ accountsManagerServices.factory('transactionService', function($cordovaSQLite, D
   };*/
 
   self.all = function() {
-    return DBA.query("select transactions .id,transactions .total, transactions .date, customer .name from transactions left join customer where transactions.customerId = customer.id")
+    //"select transactions .id,transactions .total, transactions .date, customer .name from transactions left join customer where transactions.customerId = customer.id"
+    return DBA.query("select count(*) as count, date from transactions group by date order by date DESC")
       .then(function(result){
         return DBA.getAll(result);
       });

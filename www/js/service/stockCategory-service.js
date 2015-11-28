@@ -5,7 +5,7 @@ accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite,
   var self = this;
 
   self.all = function() {
-    return DBA.query("SELECT id, category, totalItems FROM stockCategory")
+    return DBA.query("SELECT id, category, totalItems FROM stockCategory order by category")
       .then(function(result){
         return DBA.getAll(result);
       });

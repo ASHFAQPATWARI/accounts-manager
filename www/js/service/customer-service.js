@@ -2,7 +2,7 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
   var self = this;
 
   self.all = function() {
-    return DBA.query("SELECT id, name, shopName, area, country, mobile, landline FROM customer")
+    return DBA.query("SELECT id, name, shopName, area, country, mobile, landline FROM customer order by name")
       .then(function(result){
         return DBA.getAll(result);
       });
