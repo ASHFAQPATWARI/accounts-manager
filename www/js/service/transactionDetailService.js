@@ -3,7 +3,7 @@
  */
 accountsManagerServices.factory('transactionDetailService', function($cordovaSQLite, DBA, $q, stockItemService) {
   var self = this;
-
+  //select transactions .total, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, customer .name, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.date="2015-11-28" inner join customer on transactions.customerId = customer.id inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id
   //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactionDetails;");
   //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactionDetails (id integer primary key AUTOINCREMENT, transactionId integer, categoryId integer, itemId integer, qty integer, price REAL)");
   //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactions;");
