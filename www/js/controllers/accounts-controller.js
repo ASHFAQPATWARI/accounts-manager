@@ -8,7 +8,6 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
     commonService.showLoading();
     transactionService.all().then(function(transactions){
       $scope.transactions = transactions;
-      console.log('transactions', transactions);
       commonService.hideLoading();
     }, function(){
       commonService.hideLoading();

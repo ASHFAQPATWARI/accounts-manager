@@ -26,7 +26,7 @@ accountsManagerServices.factory('transactionDetailService', function($cordovaSQL
 
   self.getTransactionsByDate = function(date){
     var parameters = [date];
-    return DBA.query("select * from transactionDetails inner join transactions where transactionDetails.transactionId = transactions.id and transactions.date=(?)", parameters)
+    return DBA.query("select transactions .total, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, customer .name, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.date=(?) inner join customer on transactions.customerId = customer.id inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id", parameters)
       .then(function(result) {
         return DBA.getAll(result);
       });

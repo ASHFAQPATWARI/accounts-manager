@@ -25,13 +25,13 @@
   </div>
   <ion-content padding="true" overflow-scroll=”true” class="has-subheader" scroll-sista="header-tabs">
     <ion-list>
-      <ion-item class="item item-divider-platform" href="#/tab/accounts/{{transaction.date}}" ng-repeat="transaction in transactions">
+      <ion-item class="item item-divider-platform" href="#/tab/accounts/{{transaction.date}}" ng-repeat="transaction in transactions track by transaction.id">
         <div class="row">
           <div class="col col-80">
-            <span class="capitalize">{{transaction.date}}</span>
+            <span class="capitalize">{{::transaction.date}}</span>
           </div>
           <div class="col">
-            {{transaction.count}}
+            {{::transaction.count}}
           </div>
           <div class="col">
             <i class="icon ion-android-arrow-forward"></i>
