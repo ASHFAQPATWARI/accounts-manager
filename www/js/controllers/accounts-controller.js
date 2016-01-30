@@ -45,7 +45,9 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.transactionObj = {
     customerId: "",
     transactionDetail: [],
-    date: moment().format('L')
+    date: moment().format('L'),
+    total: 0,
+    paid: 0
   };
 
   //schema of temp transaction object
@@ -102,6 +104,11 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
         });
         if(!itemAlreadyExist){
           $scope.transactionObj.transactionDetail.push($scope.tempTransactionObj);
+          var total = 0;
+          _.forEach($scope.transactionObj.transactionDetail, function(item){
+            total += item.qty * item.price;
+          });
+          $scope.transactionObj.total = (total).toFixed(2);
           $scope.tempTransactionObj = angular.copy(schemaTransactionItem);
           $scope.itemList = [];
         } else {
@@ -122,12 +129,13 @@ accountsApp.controller('accountsCtrl', function($scope, toastService, $ionicModa
   $scope.createTransaction = function(valid){
     if(valid && $scope.transactionObj.transactionDetail.length){
       commonService.showLoading();
-      var total = 0;
-      _.forEach($scope.transactionObj.transactionDetail, function(item){
-        total += item.qty * item.price;
-      });
-      total = (total).toFixed(2);
-      transactionService.add({ customerId: $scope.transactionObj.customerId , date: moment($scope.transactionObj.date).format('YYYY-MM-DD'), total: total}).then(function(transactionId){
+      var params = {
+        customerId: $scope.transactionObj.customerId,
+        date: moment($scope.transactionObj.date).format('YYYY-MM-DD'),
+        total: $scope.transactionObj.total,
+        due: $scope.transactionObj.total - $scope.transactionObj.paid
+      };
+      transactionService.add(params).then(function(transactionId){
         transactionDetailService.addMultipleItems($scope.transactionObj.transactionDetail, transactionId).then(function(result){
           if(result == "success"){
             isUpdateNeeded = true;

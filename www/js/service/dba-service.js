@@ -14,7 +14,7 @@ accountsManagerServices.factory('DBA', function($cordovaSQLite, $q, $ionicPlatfo
           q.resolve(result);
         }, function (error) {
           console.warn('I found an error');
-          console.warn(error);
+          console.warn(JSON.stringify(error));
           q.reject(error);
         });
     });

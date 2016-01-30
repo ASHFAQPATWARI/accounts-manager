@@ -1,0 +1,27 @@
+<ion-view view-title="Scan">
+  <ion-content class="padding">
+    <button ng-click="scan();" class="button button-block button-positive">Scan</button>
+    <div class="card">
+      <div class="item item-divider">
+        <div class="row p-l-0 p-r-0">
+          <div class="col p-l-0">
+            {{item.itemname}} ({{item.category}})
+          </div>
+        </div>
+      </div>
+      <div class="item item-text-wrap">
+        {{item.itemdesc}}
+      </div>
+      <div class="item item-divider">
+        <div class="row p-l-0">
+          <div class="col p-l-0">
+            Price: {{item.itemprice | currency:"KWD"}}
+          </div>
+          <div class="col col-25 p-r-0 text-right">
+            Qty: {{item.itemqty}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

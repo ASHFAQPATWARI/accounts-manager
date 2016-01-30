@@ -16,7 +16,6 @@ accountsApp.controller('transactionDetailCtrl', function($scope, $stateParams, t
       $scope.transactionList = _.groupBy(result, function(transaction){
         return transaction.transactionId;
       });
-      console.log("transaction list", $scope.transactionList);
       commonService.hideLoading();
     }, function(){
       commonService.hideLoading();

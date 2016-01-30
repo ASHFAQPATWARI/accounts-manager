@@ -68,6 +68,20 @@
             <span class="padding-right">{{item.qty}}</span> X <span class="padding-horizontal">{{item.price | currency:"KWD"}}</span> <span class="padding-horizontal">=</span> {{item.qty * item.price | currency:"KWD"}}
           </div>
         </div>
+        <div class="row">
+          <div class="col">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label calm">Total</span>
+              <p class="input-label">{{transactionObj.total}}</p>
+            </label>
+          </div>
+          <div class="col">
+            <label class="item item-input item-stacked-label">
+              <span class="input-label calm">Paid</span>
+              <input type="number" placeholder="Amount Paid" ng-model="transactionObj.paid">
+            </label>
+          </div>
+        </div>
       </div>
       <div class="padding-horizontal">
         <button type="submit" class="button button-block button-dark" ng-click="createTransaction(addTransactionForm.$valid);">Add Transaction</button>

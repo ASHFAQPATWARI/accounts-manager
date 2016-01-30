@@ -5,7 +5,7 @@ accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite,
   var self = this;
 
   self.all = function() {
-    return DBA.query("SELECT id, category, totalItems FROM stockCategory order by category")
+    return DBA.query("SELECT id, category, totalItems FROM stockCategory WHERE status=1 order by category")
       .then(function(result){
         return DBA.getAll(result);
       });
@@ -26,7 +26,7 @@ accountsManagerServices.factory('stockCategoryService', function($cordovaSQLite,
 
   self.remove = function(id) {
     var parameters = [id];
-    return DBA.query("DELETE FROM stockCategory WHERE id = (?)", parameters);
+    return DBA.query("UPDATE stockCategory SET status = 0 WHERE id = (?)", parameters);
   };
 
   self.update = function(id, totalItems) {

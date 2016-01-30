@@ -2,7 +2,7 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
   var self = this;
 
   self.all = function() {
-    return DBA.query("SELECT id, name, shopName, area, country, mobile, landline FROM customer order by name")
+    return DBA.query("SELECT id, name, shopName, area, country, mobile, landline FROM customer where status=1 order by name")
       .then(function(result){
         return DBA.getAll(result);
       });
@@ -23,7 +23,7 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
 
   self.remove = function(member) {
     var parameters = [member.id];
-    return DBA.query("DELETE FROM customer WHERE id = (?)", parameters);
+    return DBA.query("UPDATE customer SET status = 0 WHERE id = (?)", parameters);
   };
 
   self.update = function(origMember, editMember) {
@@ -32,7 +32,7 @@ accountsManagerServices.factory('customer', function($cordovaSQLite, DBA) {
   };
 
   self.getCustomersForTransaction = function() {
-    return DBA.query("SELECT id, name FROM customer")
+    return DBA.query("SELECT id, name FROM customer WHERE status=1")
       .then(function(result){
         return DBA.getAll(result);
       });

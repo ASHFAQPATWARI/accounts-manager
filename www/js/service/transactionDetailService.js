@@ -3,11 +3,6 @@
  */
 accountsManagerServices.factory('transactionDetailService', function($cordovaSQLite, DBA, $q, stockItemService) {
   var self = this;
-  //select transactions .total, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, customer .name, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.date="2015-11-28" inner join customer on transactions.customerId = customer.id inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id
-  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactionDetails;");
-  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactionDetails (id integer primary key AUTOINCREMENT, transactionId integer, categoryId integer, itemId integer, qty integer, price REAL)");
-  //$cordovaSQLite.execute(db, "DROP TABLE IF EXISTS transactions;");
-  //$cordovaSQLite.execute(db, "CREATE TABLE IF NOT EXISTS transactions (id integer primary key AUTOINCREMENT, customerId integer, date text)");
 
   /*self.all = function() {
     return DBA.query("SELECT id, categoryid, itemname, itemdesc, itemqty, itemprice FROM stockItem")
@@ -26,7 +21,16 @@ accountsManagerServices.factory('transactionDetailService', function($cordovaSQL
 
   self.getTransactionsByDate = function(date){
     var parameters = [date];
-    return DBA.query("select transactions .total, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, customer .name, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.date=(?) inner join customer on transactions.customerId = customer.id inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id", parameters)
+    return DBA.query("select transactions .total, transactions.due, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, customer .name, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.date=(?) inner join customer on transactions.customerId = customer.id inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id", parameters)
+      .then(function(result) {
+        return DBA.getAll(result);
+      });
+  };
+
+  //get transactions by customer Id
+  self.getTransactionsByCustomerId = function(id){
+    var parameters = [id];
+    return DBA.query("select transactions .total,transactions .date, transactions .due, transactionDetails .transactionId, transactionDetails .qty, transactionDetails.price, stockCategory .category, stockItem .itemname from transactionDetails inner join transactions on transactionDetails.transactionId = transactions.id and transactions.customerId=(?) inner join stockCategory on transactionDetails.categoryId = stockCategory.id inner join stockItem on transactionDetails.itemId = stockItem.id", parameters)
       .then(function(result) {
         return DBA.getAll(result);
       });

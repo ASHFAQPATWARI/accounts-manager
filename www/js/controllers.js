@@ -14,7 +14,6 @@ accountsApp.controller('customerCtrl', function($scope, customer, $ionicModal, $
     $scope.updateCustomer();
 
     $scope.createNewCustomer = function(member, close) {
-      console.log("new customer info", member);
       customer.add(member);
       $scope.updateCustomer();
       if(close){
@@ -90,9 +89,4 @@ accountsApp.controller('customerCtrl', function($scope, customer, $ionicModal, $
     $scope.$on('modal.removed', function() {
       // Execute action
     });
-
 });
-
-/*.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})*/

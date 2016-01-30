@@ -1,25 +1,32 @@
 <ion-view view-title="{{categoryObj.category}}">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="showOptions()"><i class="icon ion-ios-more"></i></button>
+  </ion-nav-buttons>
   <ion-content class="padding" scroll-sista="header-tabs">
     <div class="card" ng-repeat="item in itemList">
       <div class="item item-divider">
-        {{item.itemname}}
+        <div class="row p-l-0 p-r-0">
+          <div class="col p-l-0">
+            {{item.itemname}}
+          </div>
+          <div class="col col-10 text-center" ng-click="updateItemModal(item)">
+            <i class="icon ion-android-create"></i>
+          </div>
+          <div class="col col-10 assertive text-center p-r-0" ng-click="deleteItem(item)">
+            <i class="icon ion-trash-a"></i>
+          </div>
+        </div>
       </div>
       <div class="item item-text-wrap">
         {{item.itemdesc}}
       </div>
       <div class="item item-divider">
-        <div class="row">
-          <div class="col ">
+        <div class="row p-l-0">
+          <div class="col p-l-0">
             Price: {{item.itemprice | currency:"KWD"}}
           </div>
-          <div class="col col-25">
+          <div class="col col-25 p-r-0 text-right">
             Qty: {{item.itemqty}}
-          </div>
-          <div class="col col-10 text-center" ng-click="updateItemModal(item)">
-            <i class="icon ion-android-create"></i>
-          </div>
-          <div class="col col-10 assertive text-center" ng-click="deleteItem(item)">
-            <i class="icon ion-trash-a"></i>
           </div>
         </div>
       </div>

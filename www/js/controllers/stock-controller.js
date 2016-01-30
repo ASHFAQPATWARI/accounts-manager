@@ -19,7 +19,6 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
 
   /*variables used in stock controller*/
   $scope.categoryObj = {};
-  $scope.itemObj = {};
   $scope.stockCategories = [];
 
   /*functions used in template*/
@@ -27,21 +26,10 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
     if($scope.categoryObj.category && $scope.categoryObj.category.trim() != ""){
       stockCategoryService.add($scope.categoryObj).then(function(){
         updateCategories();
-        $scope.closeModal('category');
+        $scope.closeModal();
       });
     } else {
       toastService.showShortBottom("Please enter a Category name.");
-    }
-  };
-
-  $scope.createNewItem = function(isValid){
-    if(isValid){
-      stockItemService.add($scope.itemObj).then(function(){
-        updateCategories();
-        $scope.closeModal('item');
-      });
-    }else {
-      toastService.showShortBottom("Please fill in all the required item details.");
     }
   };
 
@@ -61,11 +49,11 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
           onTap: function(e) {
             optionPopup.close();
             $timeout(function(){
-              $scope.openModal('category');
+              $scope.openModal();
             });
           }
         },
-        {
+        /*{
           text: '<i class="icon ion-android-add-circle">Item</i>',
           type: 'button-calm',
           onTap: function(e) {
@@ -75,7 +63,7 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
               $scope.openModal('item');
             });
           }
-        },
+        },*/
         {
           text: 'Cancel',
           type: 'button-assertive',
@@ -101,20 +89,12 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
     $scope.addCategoryModal = modal;
   });
 
-  //add item modal related functions
-  $ionicModal.fromTemplateUrl('./templates/partials/add-item-modal.html', {
-    scope: $scope,
-    animation: 'slide-in-up'
-  }).then(function(modal) {
-    $scope.addItemModal = modal;
-  });
-
-  $scope.openModal = function(modalType) {
-    modalType == 'item' ? $scope.addItemModal.show() : $scope.addCategoryModal.show();
+  $scope.openModal = function() {
+    $scope.addCategoryModal.show();
   };
 
-  $scope.closeModal = function(modalType) {
-    modalType == 'item' ? $scope.addItemModal.hide() : $scope.addCategoryModal.hide();
+  $scope.closeModal = function() {
+    $scope.addCategoryModal.hide();
   };
 
   //Cleanup the modal when we're done with it!
@@ -125,7 +105,6 @@ accountsApp.controller('stockCtrl', function($scope, toastService, $ionicModal, 
   // Execute action on hide modal
   $scope.$on('modal.hidden', function() {
     $scope.categoryObj = {};
-    $scope.itemObj = {};
   });
 
   // Execute action on remove modal

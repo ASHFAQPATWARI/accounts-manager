@@ -21,8 +21,8 @@ accountsManagerServices.factory('transactionService', function($cordovaSQLite, D
   };
 
   self.add = function(transaction) {
-    var parameters = [transaction.customerId, transaction.date, transaction.total];
-    return DBA.query("INSERT INTO transactions (customerId, date, total) VALUES (?,?,?)", parameters)
+    var parameters = [transaction.customerId, transaction.date, transaction.total, transaction.due];
+    return DBA.query("INSERT INTO transactions (customerId, date, total, due) VALUES (?,?,?,?)", parameters)
       .then(function(result){
         return result.insertId;
       });

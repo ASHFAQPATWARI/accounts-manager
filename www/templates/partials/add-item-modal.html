@@ -1,19 +1,19 @@
 <ion-modal-view>
   <ion-header-bar class="bar bar-header bar-positive">
     <h1 class="title">Add new Item</h1>
-    <button class="button" ng-click="closeModal('item')"><i class="icon ion-android-cancel"></i></button>
+    <button class="button" ng-click="closeAddModal()"><i class="icon ion-android-cancel"></i></button>
   </ion-header-bar>
   <ion-content>
     <form name="addItemForm" ng-submit="createNewItem(addItemForm.$valid);" novalidate>
       <div class="list">
-        <label class="item item-input item-select">
-          <div class="input-label">
-            Select Category:
-          </div>
-          <select name="repeatSelect" id="repeatSelect" ng-options="option.id as option.category for option in stockCategories" ng-model="itemObj.categoryid" required>
-            <option value="">Select Category</option>
-          </select>
-        </label>
+        <div class="item item-input-inset">
+          <label class="item-input-wrapper">
+            <input type="text" placeholder="Barcode" disabled ng-model="itemObj.barcode">
+          </label>
+          <button class="button button-small button-calm" ng-click="scan();">
+            Scan
+          </button>
+        </div>
         <label class="item item-input item-floating-label">
           <span class="input-label calm">Item Name</span>
           <input type="text" placeholder="Item Name" ng-model="itemObj.itemname" required>

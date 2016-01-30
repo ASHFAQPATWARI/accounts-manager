@@ -1,16 +1,20 @@
-<ion-view view-title="Transactions on: {{selectedDate}}">
+<ion-view view-title="{{customerInfo.name}}">
   <ion-content padding="true" overflow-scroll=”true” scroll-sista="header-tabs">
     <ion-list>
+      <ion-item>
+        {{::customerInfo.name}}
+      </ion-item>
       <div class="card" ng-repeat="(key, values) in transactionList track by key">
         <div class="item item-divider">
-          {{::values[0].name}}
+          {{::values[0].date}}
         </div>
         <div class="item item-text-wrap" ng-repeat="value in ::values">
-          <p>{{::value.itemname}} ({{::value.category}})</p>
+          <p>Item: {{::value.itemname}}</p>
+          <p>Category: {{::value.category}}</p>
           <p>{{::value.qty}} X {{::value.price | currency:"KWD"}} = {{::(value.qty * value.price) | currency:"KWD"}}</p>
         </div>
         <div class="item item-divider">
-          <span>Total: {{::values[0].total | currency:"KWD"}}</span>
+          <span>TOTAL: {{::values[0].total | currency:"KWD"}}</span>
           <span class="pull-right">Due: {{::values[0].due | currency:"KWD"}}</span>
         </div>
       </div>

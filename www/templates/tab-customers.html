@@ -4,7 +4,7 @@
     </ion-nav-buttons>
     <ion-content class="padding" scroll-sista="header-tabs">
         <ion-list>
-            <ion-item collection-repeat="customer in customers">
+            <ion-item collection-repeat="customer in customers" href="#/tab/customers/{{customer.id}}">
                 <span class="capitalize">{{customer.name}}</span>
                 <ion-option-button class="button-assertive" ng-click="removeCustomer(customer)"><i class="icon ion-minus-circled"></i></ion-option-button>
             </ion-item>
