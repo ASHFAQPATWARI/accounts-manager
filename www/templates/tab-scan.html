@@ -1,7 +1,7 @@
 <ion-view view-title="Scan">
   <ion-content class="padding">
     <button ng-click="scan();" class="button button-block button-positive">Scan</button>
-    <div class="card">
+    <div class="card" ng-if="item">
       <div class="item item-divider">
         <div class="row p-l-0 p-r-0">
           <div class="col p-l-0">
@@ -23,5 +23,14 @@
         </div>
       </div>
     </div>
+    <div class="card" ng-if="!item">
+      <div class="item item-divider item-text-wrap">
+        <div class="row p-l-0 p-r-0">
+          <div class="col p-l-0">
+            Please scan the Barcode to get the item information.
+          </div>
+        </div>
+      </div>
+  </div>
   </ion-content>
 </ion-view>

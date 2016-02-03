@@ -3,6 +3,8 @@
  */
 accountsApp.controller('scanCtrl', function($scope, $cordovaBarcodeScanner, stockItemService) {
 
+    $scope.item = undefined;
+
   $scope.scan = function(){
     $cordovaBarcodeScanner
       .scan()
