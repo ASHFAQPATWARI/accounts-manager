@@ -29,7 +29,6 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
 
   self.add = function(member) {
     var parameters = [member.categoryid, member.itemname, member.itemdesc, member.itemqty, member.itemprice, member.barcode];
-    console.log("parameters:", parameters);
     return DBA.query("INSERT INTO stockItem (categoryid, itemname, itemdesc, itemqty, itemprice, barcode) VALUES (?,?,?,?,?,?)", parameters)
       .then(function(){
         return stockCategoryService.getItemCount(member.categoryid)
@@ -43,10 +42,8 @@ accountsManagerServices.factory('stockItemService', function($cordovaSQLite, DBA
     var parameters = [item.id];
     return DBA.query("UPDATE stockItem SET status=0 WHERE id = (?)", parameters)
       .then(function(){
-        console.log("item:", JSON.stringify(item));
         return stockCategoryService.getItemCount(item.categoryid)
           .then(function(result){
-            console.log("item count", result.totalItems);
             return stockCategoryService.update(item.categoryid, result.totalItems - 1);
           });
       });

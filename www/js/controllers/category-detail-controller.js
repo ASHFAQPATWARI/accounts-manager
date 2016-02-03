@@ -142,7 +142,9 @@ accountsApp.controller('categoryDetailCtrl', function($scope, $cordovaBarcodeSca
 
   // Execute action on hide modal
   $scope.$on('modal.hidden', function() {
-    $scope.itemObj = {};
+    $scope.itemObj = {
+        categoryid: $stateParams.categoryId
+    };
   });
 
 });
